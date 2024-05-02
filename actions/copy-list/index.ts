@@ -67,7 +67,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
 
     } catch (error) {
         return {
-            error: "Failed to copy",
+            error: "Failed to copy.",
         };
     }
 
