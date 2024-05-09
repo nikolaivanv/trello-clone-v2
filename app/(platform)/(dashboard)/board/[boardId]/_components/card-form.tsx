@@ -4,8 +4,6 @@ import {
     forwardRef, 
     useRef, 
     ElementRef, 
-    KeyboardEvent, 
-    use,
     KeyboardEventHandler
 } from "react";
 import { useParams } from "next/navigation";
@@ -16,7 +14,7 @@ import { useAction } from "@/hooks/use-action";
 import { createCard } from "@/actions/create-card";
 
 import { Button } from "@/components/ui/button";
-import { FormTextarea } from "./form-textarea";
+import { FormTextarea } from "@/components/form/form-textarea";
 import { FormSubmit } from "@/components/form/form-submit";
 
 interface CardFormProps {
@@ -59,8 +57,8 @@ export const CardForm = forwardRef<HTMLTextAreaElement, CardFormProps>(({
         execute({ title, listId, boardId});
     };
 
-    useOnClickOutside(formRef, disableEditing);
     useEventListener("keydown", onKeyDown);
+    useOnClickOutside(formRef, disableEditing);
 
     const onTextareakeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
         if (e.key === "Enter" && !e.shiftKey) {
