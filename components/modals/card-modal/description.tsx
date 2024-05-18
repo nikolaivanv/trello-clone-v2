@@ -7,13 +7,16 @@ import { AlignLeft } from "lucide-react";
 import { useEventListener, useOnClickOutside } from "usehooks-ts";
 import { toast } from "sonner";
 
+
 import { useAction } from "@/hooks/use-action";
 import { updateCard } from "@/actions/update-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CardWithList } from "@/types";
-import { FormTextarea } from "@/components/form/form-textarea";
+import { FormRichTextarea } from "@/components/form/form-rich-textarea";
 import { FormSubmit } from "@/components/form/form-submit";
 import { Button } from "@/components/ui/button";
+import { MDXDisplay } from "@/components/ui/mdx-display";
+import { MDXEditorMethods } from "@mdxeditor/editor";
 
 
 interface DescriptionProps {
@@ -27,7 +30,7 @@ export const Description = ({
     const params = useParams();
     const [isEditing, setIsEditing] = useState(false);
 
-    const textareaRef = useRef<ElementRef<"textarea">>(null);
+    const editorRef = useRef<MDXEditorMethods>(null)
     const formRef = useRef<ElementRef<"form">>(null);
 
     const { execute, fieldErrors } = useAction(updateCard, {
@@ -49,7 +52,7 @@ export const Description = ({
     const enableEditing = () => {
         setIsEditing(true);
         setTimeout(() => {
-            textareaRef.current?.focus();
+            editorRef.current?.focus();
         });
     };
 
@@ -67,7 +70,8 @@ export const Description = ({
     useOnClickOutside(formRef, disableEditing);
 
     const onSubmit = (formData: FormData) => {
-        const description = formData.get("description") as string;
+        //console.log(editorRef.current?.getMarkdown());
+        const description = editorRef.current?.getMarkdown();
         const boardId = params.boardId as string;
 
         if (description === data.description) {
@@ -94,9 +98,9 @@ export const Description = ({
                         ref={formRef}
                         className="space-y-2"
                     >
-                        <FormTextarea
+                        <FormRichTextarea
                             id="description"
-                            ref={textareaRef}
+                            ref={editorRef}
                             className="w-full mt-2"
                             palceholder="Add a more detailed description..."
                             defaultValue={data.description || undefined}
@@ -122,7 +126,7 @@ export const Description = ({
                         role="button"
                         className="min-h-[78px] bg-neutral-200 text-sm font-medium py-3 px-3.5 rounded-md"
                     >
-                        {data.description || "Add a more detailed description..."}
+                        <MDXDisplay source={data.description || "Add a more detailed description..."} />
                     </div>
                 )}
             </div>
