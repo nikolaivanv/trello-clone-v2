@@ -11,6 +11,7 @@ import { Description } from './description';
 import { Activity } from './activity';
 import { Actions } from './actions';
 import { AuditLog } from '@prisma/client';
+import { Attachment } from './attachment';
 
 
 export const CardModal = () => {
@@ -29,6 +30,8 @@ export const CardModal = () => {
         queryFn: () => fetcher(`/api/cards/${id}/logs`),
     }); 
 
+    if(!cardData) return null;
+
     return (
         <Dialog
             open={isOpen}
@@ -46,9 +49,10 @@ export const CardModal = () => {
                                 ? <Description.Skeleton />
                                 : <Description data={cardData} />
                             }
+                            <Attachment/>
                             {!auditLogsData 
                                 ? <Activity.Skeleton />
-                                : <Activity items={auditLogsData} />
+                                : <Activity card={cardData} activityItems={auditLogsData} />
                             }
                         </div>
                     </div>

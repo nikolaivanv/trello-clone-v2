@@ -5,14 +5,18 @@ import { ActivityIcon } from "lucide-react";
 import { AuditLog } from "@prisma/client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ActivityItem } from "@/components/activity-item";
+import { CommentForm } from "./comment-form";
+import { CardWithList } from "@/types";
 
 
 interface ActivityProps {
-    items: AuditLog[];
+    card: CardWithList;
+    activityItems: AuditLog[];
 }
 
 export const Activity = ({
-    items
+    card,
+    activityItems
 }: ActivityProps) => {
 
     
@@ -23,8 +27,9 @@ export const Activity = ({
                 <p className="font-semibold text-neutral-700 mb-2">
                     Activity
                 </p>
+                <CommentForm card={card}/>
                 <ol className="mt-2 space-y-4">
-                    {items.map((item) => (
+                    {activityItems.map((item) => (
                         <ActivityItem 
                             key={item.id}
                             data={item}

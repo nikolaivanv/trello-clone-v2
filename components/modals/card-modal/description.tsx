@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, ElementRef } from "react";
+import { useState, useRef, ElementRef, KeyboardEventHandler } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { AlignLeft } from "lucide-react";
@@ -30,7 +30,7 @@ export const Description = ({
     const params = useParams();
     const [isEditing, setIsEditing] = useState(false);
 
-    const editorRef = useRef<MDXEditorMethods>(null)
+    const editorRef = useRef<MDXEditorMethods>(null);
     const formRef = useRef<ElementRef<"form">>(null);
 
     const { execute, fieldErrors } = useAction(updateCard, {
@@ -70,7 +70,6 @@ export const Description = ({
     useOnClickOutside(formRef, disableEditing);
 
     const onSubmit = (formData: FormData) => {
-        //console.log(editorRef.current?.getMarkdown());
         const description = editorRef.current?.getMarkdown();
         const boardId = params.boardId as string;
 

@@ -60,10 +60,12 @@ model Card {
   @@index([ listId ])
 }
 
+
 enum ACTION {
   CREATE
   UPDATE
   DELETE
+  COMMENT
 }
 
 enum ENTITY_TYPE {
@@ -82,6 +84,7 @@ model AuditLog {
   userId      String
   userImage   String @db.Text
   userName    String @db.Text
+  comment     String?
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

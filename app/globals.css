@@ -80,3 +80,12 @@ body,
     @apply bg-background text-foreground;
   }
 }
+
+.mdxeditor-toolbar {
+    --baseBg: rgb(229 229 229);
+    --baseBorder: rgb(229 229 229);
+    box-shadow: 0 4px 2px -2px rgb(200 200 200);
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 0px;
+    /* border: 1px solid var(--baseBorder); */
+}

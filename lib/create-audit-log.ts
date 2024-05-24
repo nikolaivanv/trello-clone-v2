@@ -7,10 +7,11 @@ interface Props {
     entityId: string;
     entityType: ENTITY_TYPE;
     entityTitle: string;
+    comment?: string;
 }
 
 export const createAuditLog = async (props: Props) => {
-    const { action, entityType, entityId, entityTitle } = props;
+    const { action, entityType, entityId, entityTitle, comment } = props;
 
     try {
         const { orgId } = auth();
@@ -30,6 +31,7 @@ export const createAuditLog = async (props: Props) => {
                 userName: user?.firstName + " " + user?.lastName,
                 userImage: user?.imageUrl,
                 orgId,
+                comment,
             }
         });
 

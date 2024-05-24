@@ -49,7 +49,7 @@ export const FormRichTextarea = forwardRef<MDXEditorMethods, FormRichTextareaPro
                     </label>
                 ) : null }
                 <Editor 
-                    editorRef={ref}
+                    ref={ref}
                     markdown={defaultValue || ""}
                 />
             </div>

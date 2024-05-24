@@ -9,13 +9,12 @@ import {
   listsPlugin,
   MDXEditorMethods, 
 } from "@mdxeditor/editor";
-import { FC } from "react";
+import { FC, forwardRef } from "react";
 
 import styles from "./mdx-editor.module.css";
 
 interface EditorProps {
   markdown: string;
-  editorRef?: React.MutableRefObject<MDXEditorMethods>;
 }
 
 /**
@@ -23,12 +22,13 @@ interface EditorProps {
  * proxying the ref is necessary. Next.js dynamically imported components don't support refs.
  */
 
-export const Editor: FC<EditorProps> = ({ markdown, editorRef }) => {
+export const Editor = forwardRef<MDXEditorMethods, EditorProps>(({
+   markdown 
+  }, ref) => {
   return (
     <MDXEditor
-      className={styles.mdxeditor}
-      //onChange={(e) => console.log(e)}
-      ref={editorRef}
+      contentEditableClassName={styles.mdxeditor}
+      ref={ref}
       markdown={markdown}
       plugins={[
         toolbarPlugin({
@@ -43,4 +43,6 @@ export const Editor: FC<EditorProps> = ({ markdown, editorRef }) => {
       ]}
     />
   );
-};
+});
+
+Editor.displayName = "Editor";

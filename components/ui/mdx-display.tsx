@@ -10,7 +10,6 @@ interface MDXDisplayProps {
 export const MDXDisplay = ({
     source
 }: MDXDisplayProps) => {
-    console.log(source);
     return (
         <Markdown className={styles.mdxdisplay} remarkPlugins={[remarkGfm]}>{source}</Markdown>
     );
