@@ -1,6 +1,6 @@
 "use client";
 
-import { Copy, Trash } from "lucide-react";
+import { Copy, Paperclip, Trash } from "lucide-react";
 import { toast } from "sonner";
 import { useParams } from "next/navigation";
 
@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CardWithList } from "@/types";
 import { useCardModal } from "@/hooks/use-card-modal";
+import { UploadFileButton } from "@/components/ui/upload-file-button";
 
 
 interface ActionsProps {
@@ -73,6 +74,15 @@ export const Actions = ({
             <p className="text-sm font-semibold">
                 Actions
             </p>
+            <UploadFileButton
+                variant="gray"
+                className="w-full justify-start"
+                size="inline"
+                //disabled={isLoadingCopy}
+            >
+                <Paperclip className="h-4 w-4 mr-2"/>
+                Attachment
+            </UploadFileButton>
             <Button
                 onClick={onCopy}
                 variant="gray"
