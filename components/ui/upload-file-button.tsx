@@ -8,9 +8,10 @@ import {
     generateMimeTypes,
   } from "uploadthing/client";
 import { PaperclipIcon } from "lucide-react";
+import { ClientUploadedFileData } from "uploadthing/types";
 
   interface UploadButtonProps extends ButtonProps {
-    onClientUploadComplete?: () => void;
+    onClientUploadComplete?: (res: ClientUploadedFileData<{ uploadedBy: string; }>[]) => void;
     onUploadError?: () => void;
     onUploadBegin?: () => void;
   }

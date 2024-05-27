@@ -12,6 +12,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { CardWithList } from "@/types";
 import { useCardModal } from "@/hooks/use-card-modal";
 import { UploadFileButton } from "@/components/ui/upload-file-button";
+import { createAttachment } from "@/actions/create-attachment";
+import { ClientUploadedFileData } from "uploadthing/types";
+import { useQueryClient } from "@tanstack/react-query";
 
 
 interface ActionsProps {
@@ -21,6 +24,23 @@ interface ActionsProps {
 export const Actions = ({
     data
 }: ActionsProps) => {
+    const queryClient = useQueryClient();
+    
+    const { 
+        execute: executeCreateAttachment,
+        isLoading: isLoadingAttachment,
+    } = useAction(createAttachment, {
+        onSuccess: (attachment) => {
+            toast.success(`File "${attachment.name}" uploaded`);
+            queryClient.invalidateQueries({
+                queryKey: ["card", data.id]
+            });
+        },
+        onError: (error) => {
+            toast.error(error);
+        }
+    });
+    
     const { 
         execute: executeCopyCard,
         isLoading: isLoadingCopy,
@@ -49,6 +69,25 @@ export const Actions = ({
 
     const params = useParams();
     const cardModal = useCardModal();
+
+
+    const onUploadComplete = (res: ClientUploadedFileData<{ uploadedBy: string; }>[]) => {
+        const boardId = params.boardId as string;
+        if (res.length == 0) {
+            return;
+        }
+        const file = res[0];
+        
+
+        executeCreateAttachment({
+            boardId,
+            cardId: data.id,
+            name: file.name,
+            url: file.url,
+            type: file.type,
+            size: file.size,
+        });
+    };
 
     const onCopy = () => {
         const boardId = params.boardId as string;
@@ -79,6 +118,7 @@ export const Actions = ({
                 className="w-full justify-start"
                 size="inline"
                 //disabled={isLoadingCopy}
+                onClientUploadComplete={onUploadComplete}
             >
                 <Paperclip className="h-4 w-4 mr-2"/>
                 Attachment

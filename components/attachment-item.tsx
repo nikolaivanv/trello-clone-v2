@@ -8,6 +8,6 @@ export const AttachmentItem = ({
     attachment
 }: AttachmentItemProps) => {
     return (
-        <div>Attachment Item</div>
+        <div>{attachment.name}</div>
     );
 }

@@ -2,8 +2,6 @@ import { PaperclipIcon } from "lucide-react";
 
 import { Attachment } from "@prisma/client";
 
-import { FileUpload } from "@/components/ui/file-upload";
-import { UploadThing } from "@/components/ui/upload-thing";
 import { AttachmentItem } from "@/components/attachment-item";
 
 
